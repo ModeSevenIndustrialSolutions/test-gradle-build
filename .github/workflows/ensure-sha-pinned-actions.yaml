@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: 2024 The Linux Foundation
 
-name: "[D] Test Pinned Action Versions"
+name: "[D] Ensure SHA Pinned Actions"
 
 # yamllint disable-line rule:truthy
 on:
@@ -20,11 +20,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
 
-      - name: "Setup Python v5"
-        uses: actions/setup-python@v5
-
-      - name: "Setup Java v4"
-        uses: actions/setup-java@v4
+      - name: Ensure SHA pinned actions
+        uses: zgosalvez/github-actions-ensure-sha-pinned-actions@ed00f72a3ca5b6eff8ad4d3ffdcacedb67a21db1 # v3.0.15
         with:
-          java-version: 17
-          distribution: 'temurin'
+          dry_run: 'true'
