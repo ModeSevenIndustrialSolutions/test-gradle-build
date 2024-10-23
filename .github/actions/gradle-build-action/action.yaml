@@ -1,0 +1,49 @@
+---
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: 2023 The Linux Foundation
+
+name: "gradle-build"
+description: "Setup a specific JDK version and run gradle build"
+
+inputs:
+  jdk-version:
+    description: "OpenJDK version"
+    # java-version-file is required if this is NOT set
+    required: false
+  distribution:
+    description: "Java distribution"
+    required: false
+    default: "temurin"
+  java-version-file:
+    description: "The path to a file containing java version"
+    required: false
+    # Supported file types are .java-version and .tool-versions
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Verify inputs"
+      shell: bash
+      run: |
+        # Verify Java version correctly specified
+        if [ -z ${{ inputs.jdk-version }} ] && [ -z ${{ inputs.java-version-file }} ]; then
+          echo "Error: either jdk-version or java-version-file must be specified"; exit 1
+        elif [ ! -f ${{ inputs.java-version-file }} ]; then
+            echo "java-version-file NOT found in repository: ${{ inputs.java-version-file }}"
+            exit 1
+          fi
+        fi
+    - name: Setup JDK
+      id: setup-jdk
+      uses: actions/setup-java@v3
+      with:
+        java-version: ${{ inputs.jdk-version }}
+        distribution: ${{ inputs.distribution }}
+        java-version-file: ${{ inputs.java-version-file }}
+    - name: Setup Gradle
+      id: setup-gradle
+      uses: gradle/gradle-build-action@v2
+    - name: Run build with Gradle Wrapper
+      id: run-gradle-build
+      shell: bash
+      run: ./gradlew build

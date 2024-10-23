@@ -1,0 +1,24 @@
+---
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: 2023 The Linux Foundation
+
+name: Gradle Build Test
+
+# yamllint disable-line rule:truthy
+on:
+  workflow_dispatch:
+
+env:
+  JDK_VERSION: 17
+
+jobs:
+  run-gradle-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Run gradle build"
+        # yamllint disable-line rule:line-length
+        uses: lfit/releng-reusable-workflows/.github/actions/gradle-build-action@main
+        with:
+          jdk-version: ${{ env.JDK_VERSION }}
