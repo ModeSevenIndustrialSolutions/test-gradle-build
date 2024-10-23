@@ -1,0 +1,28 @@
+---
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: 2024 The Linux Foundation
+
+name: "[D] Test Pinned Action Versions"
+
+# yamllint disable-line rule:truthy
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, reopened, edited, synchronize]
+    paths:
+      - .github/workflow/test-action-versions.yaml
+
+jobs:
+  ### Test Version Pinned Actions ###
+  test-versions:
+    name: "Test Pinned Action Versions"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Setup Python v5"
+        uses: actions/setup-python@v5
+
+      - name: "Setup Java v4"
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'temerin'
