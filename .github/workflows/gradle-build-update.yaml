@@ -21,4 +21,4 @@ jobs:
         # yamllint disable-line rule:line-length
         uses: ModeSevenIndustrialSolutions/test-gradle-build/.github/actions/gradle-build-action@main
         with:
-          jdk-version: ${{ env.JDK_VERSION }}
+          java-version-file: "README.md"
