@@ -8,16 +8,16 @@ description: "Setup a specific JDK version and run gradle build"
 inputs:
   jdk-version:
     description: "OpenJDK version"
-    # java-version-file is required if this is NOT set
+    # Note: java-version-file is required if this is NOT set
     required: false
+  java-version-file:
+    description: "The path to a file containing java version"
+    required: false
+    # Note: supported file types are .java-version and .tool-versions [2024-Oct-23]
   distribution:
     description: "Java distribution"
     required: false
     default: "temurin"
-  java-version-file:
-    description: "The path to a file containing java version"
-    required: false
-    # Supported file types are .java-version and .tool-versions
 
 runs:
   using: "composite"
@@ -29,9 +29,8 @@ runs:
         if [ -z ${{ inputs.jdk-version }} ] && [ -z ${{ inputs.java-version-file }} ]; then
           echo "Error: either jdk-version or java-version-file must be specified"; exit 1
         elif [ ! -f ${{ inputs.java-version-file }} ]; then
-            echo "java-version-file NOT found in repository: ${{ inputs.java-version-file }}"
-            exit 1
-          fi
+          echo "java-version-file NOT found in repository: ${{ inputs.java-version-file }}"
+          exit 1
         fi
     - name: Setup JDK
       id: setup-jdk
