@@ -20,5 +20,5 @@ jobs:
       - name: "Run gradle build"
         # yamllint disable-line rule:line-length
         uses: ModeSevenIndustrialSolutions/test-gradle-build/.github/actions/gradle-build-action@main
-        with:
-          jdk-version: ${{ env.JDK_VERSION }}
+        # with:
+        #  jdk-version: ${{ env.JDK_VERSION }}
