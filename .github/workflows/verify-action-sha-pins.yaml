@@ -14,7 +14,7 @@ on:
 jobs:
   ### Test Version Pinned Actions ###
   test-versions:
-    name: "Validate Action SHA Pinning"
+    name: "Check Action SHA Pinning"
     runs-on: ubuntu-latest
     steps:
 
